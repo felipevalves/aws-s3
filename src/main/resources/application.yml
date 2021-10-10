@@ -1,0 +1,13 @@
+cloud:
+  aws:
+    bucketName: bucket-s3-felipe
+    region:
+      static: sa-east-1
+      auto: false
+    credentials:
+      access-key: AKIA3YZF65SR3AXISAWY
+      secret-key: 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
+
+file:
+    path: C:\temp
+    filename: ilha.jpg
