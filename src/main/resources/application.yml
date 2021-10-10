@@ -6,7 +6,7 @@ cloud:
       auto: false
     credentials:
       access-key: AKIA3YZF65SR3AXISAWY
-      secret-key: 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
+      secret-key: xxx
 
 file:
     path: C:\temp
