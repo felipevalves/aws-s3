@@ -1,9 +1,11 @@
 package br.com.felipe.awss3;
 
 import br.com.felipe.awss3.sdk.MySdkS3;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
@@ -47,4 +49,44 @@ public class TestAwsS3Sdk {
         Assertions.assertNotNull(list);
         System.out.println(list);
     }
+
+    @Test
+    void test_upload_produto_mili() {
+        s3.uploadProdutoMili("577");
+
+        Assertions.assertTrue(true);
+    }
+
+    @Value("${produtos.codigos}")
+    private String propdutos;
+
+    @Test
+    void uploadImagens() {
+        String[] arrayProdutos = propdutos.split(",");
+
+        for (String p : arrayProdutos) {
+            s3.uploadProdutoMili(p);
+        }
+    }
+
+    @Test
+    void downloadImagens() {
+
+        Download download = new Download();
+
+        String[] arrayProdutos = propdutos.split(",");
+
+        for (String p : arrayProdutos) {
+
+            try {
+                download.startDownload(p);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
+    }
+
 }

@@ -7,15 +7,12 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileCopyUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Service
 @Slf4j
@@ -37,10 +34,28 @@ public class MySdkS3 {
         log.info("upload start");
 
         Random random = new Random();
-        int pos = random.nextInt(1,100);
+        int pos = random.nextInt(100);
 
 
         amazonS3.putObject(bucketName, pos + "-" + filename, new File(path + File.separator + filename));
+        log.info("upload end");
+    }
+
+    public void uploadProdutoMili(String produto) {
+        log.info("upload start " + produto);
+
+
+        //amazonS3.putObject(bucketName, "catalogo", "Uploaded Object");
+
+        // Upload a file as a new object with ContentType and title specified.
+        PutObjectRequest request = new PutObjectRequest(bucketName, produto + ".png", new File(path + File.separator + produto +".png"));
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentType("image/png");
+        metadata.addUserMetadata("title", filename);
+        request.setMetadata(metadata);
+        request.withCannedAcl(CannedAccessControlList.PublicRead);
+        amazonS3.putObject(request);
+
         log.info("upload end");
     }
 
@@ -79,6 +94,7 @@ public class MySdkS3 {
 
         return list.getObjectSummaries()
                 .stream()
+                //.filter(it -> it.getKey().startsWith("catalogo/"))
                 .map(S3ObjectSummary::getKey)
                 .collect(Collectors.toList());
     }

@@ -1,13 +1,16 @@
 cloud:
   aws:
-    bucketName: bucket-s3-felipe
+    bucketName: mili-helpdesk
     region:
-      static: sa-east-1
+      static: us-east-2
       auto: false
     credentials:
       access-key: AKIA3YZF65SR3AXISAWY
       secret-key: xxx
 
 file:
-    path: C:\temp
-    filename: ilha.jpg
+    path: C:\doc\aws
+    filename: 577.png
+
+produtos:
+    codigos: 1330
